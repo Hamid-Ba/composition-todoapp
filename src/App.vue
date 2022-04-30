@@ -8,6 +8,7 @@
       :key="item.id" 
       :todo="item"
       @StatusChanged="ChangeStatus"
+      @ItemDeleted="DeleteItem"
       @dragover.prevent
       @dragstart="DragStarted(index)"
       @drop="DropStarted(index)"/>
@@ -33,21 +34,27 @@ import Header from './components/AppHeader.vue'
 import TodoAdd from './components/TodoAdd.vue'
 import TodoItem from './components/TodoItem.vue'
 import AppFooter from './components/AppFooter.vue'
-import { reactive, ref ,computed} from 'vue'
+import { ref ,computed} from 'vue'
 
-var todoList = reactive([])
+var todoList = ref([])
 var dragIndex = ref(-1)
 var selectedTab = ref('all')
 
 let AddTodo = (todoTitle) => {
   const todoId = Math.random().toString(15).slice(3);
   var todo = {id:todoId,title : todoTitle,isCompleted : false}
-  todoList.push(todo)
+  todoList.value.push(todo)
 }
 
 let ChangeStatus = (itemId) => {
-  var item = todoList.find(i => i.id == itemId);
+  var item = todoList.value.find(i => i.id == itemId);
   item.isCompleted = !item.isCompleted;
+}
+
+let DeleteItem = (itemId) => {
+  var todos = [...todoList.value]
+  todos = todos.filter(i => i.id !== itemId)
+  todoList.value = todos
 }
 
 let DragStarted = (index) => {
@@ -55,8 +62,8 @@ let DragStarted = (index) => {
 }
 
 let DropStarted = (index) => {
-  var item = todoList.splice(dragIndex.value,1)[0];
-  todoList.splice(index,0,item);
+  var item = todoList.value.splice(dragIndex.value,1)[0];
+  todoList.value.splice(index,0,item);
 }
 
 let ChangeTab = (tab) =>{
@@ -66,11 +73,11 @@ let ChangeTab = (tab) =>{
 let FilterByTabs = computed(() => {
   switch(selectedTab.value){
     case "active":
-      return todoList.filter(t => !t.isCompleted)
+      return todoList.value.filter(t => !t.isCompleted)
     case "completed":
-      return todoList.filter(t => t.isCompleted)
+      return todoList.value.filter(t => t.isCompleted)
     default :
-      return todoList;
+      return todoList.value;
   }
 })
 

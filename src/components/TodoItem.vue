@@ -5,7 +5,7 @@
           <span class="check"></span>
         </div>
         <p class="item" v-text="props.todo.title"></p>
-        <button class="clear">
+        <button class="clear" @click="DeleteItem(props.todo.id)">
           <img src="../assets/icon-cross.svg" alt="Clear it" />
         </button>
       </li>
@@ -18,10 +18,15 @@ const props = defineProps({
   todo : Object
 })
 
-const emits = defineEmits(['StatusChanged'])
+const emits = defineEmits(['StatusChanged','ItemDeleted'])
 
 let ChangeStatus = (id) =>{
   emits('StatusChanged',id)
+}
+
+let DeleteItem = (id) =>{
+  if(confirm("Are U Sure About That ?"))
+    emits('ItemDeleted',id)
 }
 
 </script>
