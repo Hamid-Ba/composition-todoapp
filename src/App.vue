@@ -4,8 +4,8 @@
     <TodoAdd @ItemAdded="AddTodo"/>
     <ul class="todos">
 
-      <TodoItem v-for="(item,index) in todoList" 
-      :key="index" 
+      <TodoItem v-for="(item,index) in FilterByTabs" 
+      :key="item.id" 
       :todo="item"
       @dragover.prevent
       @dragstart="DragStarted(index)"
@@ -32,7 +32,7 @@ import Header from './components/AppHeader.vue'
 import TodoAdd from './components/TodoAdd.vue'
 import TodoItem from './components/TodoItem.vue'
 import AppFooter from './components/AppFooter.vue'
-import { reactive, ref } from 'vue'
+import { reactive, ref ,computed} from 'vue'
 
 var todoList = reactive([])
 var dragIndex = ref(-1)
@@ -56,5 +56,16 @@ let DropStarted = (index) => {
 let ChangeTab = (tab) =>{
   selectedTab.value = tab;
 }
+
+let FilterByTabs = computed(() => {
+  switch(selectedTab.value){
+    case "active":
+      return todoList.filter(t => !t.isCompleted)
+    case "completed":
+      return todoList.filter(t => t.isCompleted)
+    default :
+      return todoList;
+  }
+})
 
 </script>
