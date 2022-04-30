@@ -15,9 +15,9 @@
     <div class="card stat">
       <p class="corner"><span id="items-left">0</span> مورد باقی مانده</p>
       <div class="filter">
-        <button id="all" class="on">همه</button>
-        <button id="active" >فعال</button>
-        <button id="completed">تکمیل</button>
+        <button id="all" :class="{'on' : selectedTab == 'all'}" @click="ChangeTab('all')">همه</button>
+        <button id="active" :class="{'on' : selectedTab == 'active'}" @click="ChangeTab('active')">فعال</button>
+        <button id="completed" :class="{'on' : selectedTab == 'completed'}" @click="ChangeTab('completed')">تکمیل</button>
       </div>
       <div class="corner">
         <button id="clear-completed">حذف تکمیل شده ها</button>
@@ -36,6 +36,7 @@ import { reactive, ref } from 'vue'
 
 var todoList = reactive([])
 var dragIndex = ref(-1)
+var selectedTab = ref('all')
 
 let AddTodo = (todoTitle) => {
   const todoId = Math.random().toString(15).slice(3);
@@ -52,5 +53,8 @@ let DropStarted = (index) => {
   todoList.splice(index,0,item);
 }
 
+let ChangeTab = (tab) =>{
+  selectedTab.value = tab;
+}
 
 </script>
