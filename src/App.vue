@@ -15,7 +15,7 @@
       
     </ul>
     <div class="card stat">
-      <p class="corner"><span id="items-left">0</span> مورد باقی مانده</p>
+      <p class="corner"><span id="items-left">{{FilterByTabs.length}}</span> مورد </p>
       <div class="filter">
         <button id="all" :class="{'on' : selectedTab == 'all'}" @click="ChangeTab('all')">همه</button>
         <button id="active" :class="{'on' : selectedTab == 'active'}" @click="ChangeTab('active')">فعال</button>
