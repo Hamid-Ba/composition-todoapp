@@ -4,7 +4,7 @@
     <TodoAdd @ItemAdded="AddTodo"/>
     <ul class="todos">
 
-      <TodoItem />
+      <TodoItem v-for="(item,index) in todoList" :key="index" :todo="item"/>
       
     </ul>
     <div class="card stat">
@@ -27,14 +27,14 @@ import Header from './components/AppHeader.vue'
 import TodoAdd from './components/TodoAdd.vue'
 import TodoItem from './components/TodoItem.vue'
 import AppFooter from './components/AppFooter.vue'
-import { reactive } from '@vue/reactivity'
+import { reactive } from 'vue'
 
 var todoList = reactive([])
 
-function AddTodo(todo){
-  console.log(todoList);
+function AddTodo(todoTitle){
+  const todoId = Math.random().toString(15).slice(3);
+  var todo = {id:todoId,title : todoTitle,isCompleted : false}
   todoList.push(todo)
-  console.log(todoList);
 }
 
 </script>

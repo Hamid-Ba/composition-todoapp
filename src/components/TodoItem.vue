@@ -1,10 +1,10 @@
 <template>
   <li class="card" draggable="true">
         <div class="cb-container">
-          <input type="checkbox" class="cb-input" />
+          <input :checked="props.todo.isCompleted" type="checkbox" class="cb-input" />
           <span class="check"></span>
         </div>
-        <p class="item">یادگیری جاوااسکریپت</p>
+        <p class="item" v-text="props.todo.title"></p>
         <button class="clear">
           <img src="../assets/icon-cross.svg" alt="Clear it" />
         </button>
@@ -12,5 +12,10 @@
 </template>
 
 <script setup>
+import {defineProps} from "vue";
+
+const props = defineProps({
+  todo : Object
+})
 
 </script>
