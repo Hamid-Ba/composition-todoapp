@@ -7,6 +7,7 @@
       <TodoItem v-for="(item,index) in FilterByTabs" 
       :key="item.id" 
       :todo="item"
+      @StatusChanged="ChangeStatus"
       @dragover.prevent
       @dragstart="DragStarted(index)"
       @drop="DropStarted(index)"/>
@@ -42,6 +43,11 @@ let AddTodo = (todoTitle) => {
   const todoId = Math.random().toString(15).slice(3);
   var todo = {id:todoId,title : todoTitle,isCompleted : false}
   todoList.push(todo)
+}
+
+let ChangeStatus = (itemId) => {
+  var item = todoList.find(i => i.id == itemId);
+  item.isCompleted = !item.isCompleted;
 }
 
 let DragStarted = (index) => {
