@@ -22,7 +22,7 @@
         <button id="completed" :class="{'on' : selectedTab == 'completed'}" @click="ChangeTab('completed')">تکمیل</button>
       </div>
       <div class="corner">
-        <button id="clear-completed">حذف تکمیل شده ها</button>
+        <button id="clear-completed" @click="DeleteAllCompleted">حذف تکمیل شده ها</button>
       </div>
     </div>
   </main>
@@ -55,6 +55,11 @@ let DeleteItem = (itemId) => {
   var todos = [...todoList.value]
   todos = todos.filter(i => i.id !== itemId)
   todoList.value = todos
+}
+
+let DeleteAllCompleted = () => {
+  if(confirm("Are U Sure About That ?"))
+    todoList.value = todoList.value.filter(i => !i.isCompleted)
 }
 
 let DragStarted = (index) => {
