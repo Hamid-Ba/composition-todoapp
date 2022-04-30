@@ -37,6 +37,14 @@ body.light {
 
 /* RESETS */
 
+.Vue-Toastification__toast {
+  margin-left: unset !important;
+  margin-right: unset !important;
+  width :fit-content !important;
+}
+
+
+
 * {
   margin: 0;
   padding: 0;

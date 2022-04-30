@@ -34,16 +34,19 @@ import Header from './components/AppHeader.vue'
 import TodoAdd from './components/TodoAdd.vue'
 import TodoItem from './components/TodoItem.vue'
 import AppFooter from './components/AppFooter.vue'
+import { useToast } from "vue-toastification";
 import { ref ,computed} from 'vue'
 
 var todoList = ref([])
 var dragIndex = ref(-1)
 var selectedTab = ref('all')
+const toast = useToast();
 
 let AddTodo = (todoTitle) => {
   const todoId = Math.random().toString(15).slice(3);
   var todo = {id:todoId,title : todoTitle,isCompleted : false}
   todoList.value.push(todo)
+  toast.success(`${todoTitle} Addedd Successfuly`);
 }
 
 let ChangeStatus = (itemId) => {
@@ -55,11 +58,15 @@ let DeleteItem = (itemId) => {
   var todos = [...todoList.value]
   todos = todos.filter(i => i.id !== itemId)
   todoList.value = todos
+  toast.error(`Item Deleted Successfuly`);
 }
 
 let DeleteAllCompleted = () => {
-  if(confirm("Are U Sure About That ?"))
+  if(confirm("Are U Sure About That ?")){
     todoList.value = todoList.value.filter(i => !i.isCompleted)
+    toast.error(`Completed Tasks Deleted Successfuly`);
+  }
+
 }
 
 let DragStarted = (index) => {
