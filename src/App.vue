@@ -1,7 +1,7 @@
 <template>
   <Header />
   <main>
-    <TodoAdd />
+    <TodoAdd @ItemAdded="AddTodo"/>
     <ul class="todos">
 
       <TodoItem />
@@ -27,6 +27,14 @@ import Header from './components/AppHeader.vue'
 import TodoAdd from './components/TodoAdd.vue'
 import TodoItem from './components/TodoItem.vue'
 import AppFooter from './components/AppFooter.vue'
+import { reactive } from '@vue/reactivity'
 
+var todoList = reactive([])
+
+function AddTodo(todo){
+  console.log(todoList);
+  todoList.push(todo)
+  console.log(todoList);
+}
 
 </script>
